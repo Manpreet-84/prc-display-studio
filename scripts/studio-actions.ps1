@@ -93,7 +93,6 @@ $script:ui.LayerUp.Add_Click({$i=$script:selectedElement;if($i -gt 0){$temp=$scr
 $script:ui.LayerDown.Add_Click({$i=$script:selectedElement;if($i -ge 0 -and $i -lt $script:elements.Count-1){$temp=$script:elements[$i+1];$script:elements[$i+1]=$script:elements[$i];$script:elements[$i]=$temp;$script:selectedElement++;$script:dirty=$true;Draw-Design}})
 $script:ui.SaveSettings.Add_Click({Safe-Action {$script:settings.dwell=Dwell $script:ui.SettingsDwell.Text;$script:ui.ThemeDwell.Text=[string]$script:settings.dwell;Persist-Playback;Notice 'Playback timing saved.'}})
 $script:ui.StartDisplay.Add_Click({Start-Display});$script:ui.StopDisplay.Add_Click({Send-Command 'quit';Notice 'Stopping display.'});$script:ui.ReloadDisplay.Add_Click({Restart-Display})
-$script:ui.ToggleAmbient.Add_Click({if(-not(Get-Process prc-lcd -ErrorAction SilentlyContinue)){Notice 'Start the display first, then toggle screen sync.';return};Send-Command 'hardware ambient';Notice 'Screen-sync toggle requested. Ctrl+Alt+5 also toggles it; check the RGB log for the result.'})
 $script:ui.OpenThemesFolder.Add_Click({Start-Process explorer.exe -ArgumentList $env:PRC_THEME_DIR});$script:ui.OpenLogs.Add_Click({Start-Process notepad.exe -ArgumentList (Join-Path $script:root 'display-live.log')})
 function Render-Element-Palette {
  $script:ui.ElementPalette.Children.Clear()
