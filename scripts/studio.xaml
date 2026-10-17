@@ -1,0 +1,168 @@
+<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="PRC Display Studio" Width="1280" Height="820" MinWidth="1050" MinHeight="700" WindowStartupLocation="CenterScreen" Background="#08090B" FontFamily="Segoe UI" FontSize="13" Foreground="#E8E9EB">
+
+ <Window.Resources>
+  <SolidColorBrush x:Key="PanelBrush" Color="#111316"/><SolidColorBrush x:Key="LineBrush" Color="#313740"/>
+  <Style TargetType="CheckBox"><Setter Property="Foreground" Value="#E8E9EB"/></Style>
+  <Style TargetType="ListBox"><Setter Property="Background" Value="#0B0C0E"/><Setter Property="Foreground" Value="#E8E9EB"/></Style>
+  <Style TargetType="TabItem"><Setter Property="Foreground" Value="#8B919B"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="TabItem"><Border x:Name="t" Background="#171A1E" Padding="10,8" BorderBrush="#313740" BorderThickness="0,0,0,1"><ContentPresenter ContentSource="Header"/></Border><ControlTemplate.Triggers><Trigger Property="IsSelected" Value="True"><Setter Property="Foreground" Value="#3DD6F5"/><Setter TargetName="t" Property="BorderBrush" Value="#3DD6F5"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+
+  <Style TargetType="Button"><Setter Property="Background" Value="#171A1E"/><Setter Property="Foreground" Value="#E8E9EB"/><Setter Property="Padding" Value="14,10"/><Setter Property="Margin" Value="0,0,8,8"/><Setter Property="Cursor" Value="Hand"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="Button"><Border x:Name="b" Background="{TemplateBinding Background}" CornerRadius="9" BorderBrush="#313740" BorderThickness="1"><ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/></Border><ControlTemplate.Triggers><Trigger Property="IsMouseOver" Value="True"><Setter TargetName="b" Property="BorderBrush" Value="#3DD6F5"/></Trigger><Trigger Property="IsKeyboardFocused" Value="True"><Setter TargetName="b" Property="BorderBrush" Value="#3DD6F5"/><Setter TargetName="b" Property="BorderThickness" Value="2"/></Trigger><Trigger Property="IsEnabled" Value="False"><Setter TargetName="b" Property="Opacity" Value="0.4"/></Trigger></ControlTemplate.Triggers></ControlTemplate></Setter.Value></Setter></Style>
+
+  <Style x:Key="Primary" TargetType="Button" BasedOn="{StaticResource {x:Type Button}}"><Setter Property="Background" Value="#3DD6F5"/><Setter Property="Foreground" Value="#04181D"/></Style>
+
+  <Style TargetType="TextBox"><Setter Property="Padding" Value="8"/><Setter Property="Margin" Value="0,4,8,8"/><Setter Property="BorderBrush" Value="#313740"/><Setter Property="Background" Value="#0B0C0E"/><Setter Property="Foreground" Value="#E8E9EB"/></Style>
+
+  <Style TargetType="ComboBox"><Setter Property="ItemTemplate"><Setter.Value><DataTemplate><TextBlock Text="{Binding label}" Foreground="#E8E9EB" TextWrapping="NoWrap" TextTrimming="CharacterEllipsis"/></DataTemplate></Setter.Value></Setter><Setter Property="Foreground" Value="#E8E9EB"/><Setter Property="Margin" Value="0,4,8,8"/><Setter Property="Template"><Setter.Value><ControlTemplate TargetType="ComboBox"><Grid>
+   <ToggleButton Focusable="False" IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"><ToggleButton.Template><ControlTemplate TargetType="ToggleButton"><Border Background="#0B0C0E" BorderBrush="#313740" BorderThickness="1" CornerRadius="4"><Grid Margin="8"><TextBlock Text="⌄" HorizontalAlignment="Right" Foreground="#8B919B"/></Grid></Border></ControlTemplate></ToggleButton.Template></ToggleButton>
+   <ContentPresenter Content="{TemplateBinding SelectionBoxItem}" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Margin="8,8,24,8" IsHitTestVisible="False"/>
+   <Popup x:Name="PART_Popup" Placement="Bottom" IsOpen="{TemplateBinding IsDropDownOpen}" AllowsTransparency="True" Focusable="False" PopupAnimation="Fade"><Border Background="#171A1E" BorderBrush="#313740" BorderThickness="1" MinWidth="{Binding ActualWidth, RelativeSource={RelativeSource TemplatedParent}}" MaxHeight="250"><ScrollViewer><ItemsPresenter/></ScrollViewer></Border></Popup>
+  </Grid></ControlTemplate></Setter.Value></Setter><Setter Property="ItemContainerStyle"><Setter.Value><Style TargetType="ComboBoxItem"><Setter Property="Foreground" Value="#E8E9EB"/><Setter Property="Padding" Value="8"/><Style.Triggers><Trigger Property="IsHighlighted" Value="True"><Setter Property="Background" Value="#263943"/></Trigger></Style.Triggers></Style></Setter.Value></Setter></Style>
+
+  <Style TargetType="Expander"><Setter Property="Foreground" Value="#E8E9EB"/></Style>
+  <Style TargetType="TextBlock"><Setter Property="Foreground" Value="#E8E9EB"/><Setter Property="TextWrapping" Value="Wrap"/></Style>
+
+ </Window.Resources>
+
+ <Grid><Grid.ColumnDefinitions><ColumnDefinition Width="190"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+
+  <Border Background="#0C0D10" BorderBrush="#22262C" BorderThickness="0,0,1,0"><DockPanel Margin="20">
+
+   <StackPanel DockPanel.Dock="Top"><TextBlock Text="PRC" FontSize="30" FontWeight="Bold" Margin="4,10,0,0"/><TextBlock Text="DISPLAY STUDIO" FontSize="10" Foreground="#8B919B" Margin="4,0,0,35"/>
+
+    <Button x:Name="NavThemes" Content="Themes &amp; playback" Style="{StaticResource Primary}"/><Button x:Name="NavEditor" Content="Theme maker"/><Button x:Name="NavSettings" Content="Settings"/>
+
+   </StackPanel>
+
+   <StackPanel DockPanel.Dock="Bottom" VerticalAlignment="Bottom"><TextBlock Text="THERMALRIGHT LCD" FontSize="10" Foreground="#8B919B"/><TextBlock Text="320 x 240" FontWeight="SemiBold" Margin="0,6"/><TextBlock x:Name="DeviceState" Text="Checking display..." Foreground="#8B919B"/></StackPanel>
+
+  </DockPanel></Border>
+
+  <Grid Grid.Column="1" Margin="24,20"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+   <StackPanel Margin="0,0,0,18"><TextBlock x:Name="PageTitle" Text="Your display, your way." FontSize="26" FontWeight="SemiBold"/><TextBlock x:Name="PageHint" Text="Choose one face or build a rotation from your favourites." Foreground="#8B919B" Margin="0,5,0,0"/></StackPanel>
+
+   <Grid x:Name="ThemesPage" Grid.Row="1"><Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="350"/></Grid.ColumnDefinitions>
+
+    <Grid Margin="0,0,20,0"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+     <DockPanel><Button x:Name="RefreshThemes" Content="Refresh" DockPanel.Dock="Right"/><TextBox x:Name="SearchThemes" ToolTip="Search themes" MinWidth="120"/></DockPanel>
+
+     <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto"><WrapPanel x:Name="ThemeCards"/></ScrollViewer>
+
+     <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,12,0,0"><Button x:Name="CheckAll" Content="Select all"/><Button x:Name="UncheckAll" Content="Clear checks"/><TextBlock x:Name="ThemeCount" VerticalAlignment="Center" Foreground="#8B919B"/></StackPanel>
+
+    </Grid>
+
+    <Border Grid.Column="1" Background="#111316" CornerRadius="14" Padding="18" BorderBrush="#22262C" BorderThickness="1"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+
+     <TextBlock Text="SELECTED FACE" FontSize="10" Foreground="#8B919B"/><TextBlock x:Name="SelectedName" Text="Select a theme" FontSize="20" FontWeight="SemiBold" Margin="0,6,0,12"/>
+
+     <Border Background="#080C14" CornerRadius="8"><Image x:Name="ThemePreview" Height="226" Stretch="Uniform"/></Border>
+
+     <TextBlock Text="Preview uses demo readings. The LCD uses live sensors." Foreground="#8B919B" FontSize="11" Margin="0,10,0,20"/>
+
+     <Button x:Name="UseSingle" Content="Use this face" Style="{StaticResource Primary}"/>
+
+     <Button x:Name="PlayPlaylist" Content="Play checked playlist"/>
+
+     <TextBlock x:Name="PlaylistHint" Text="No checks = rotate every available face." Foreground="#8B919B" FontSize="11" Margin="0,2,0,18"/>
+
+     <TextBlock Text="Seconds per face"/><TextBox x:Name="ThemeDwell" Text="10"/>
+
+     <Button x:Name="EditSelected" Content="Edit / use as background"/>
+
+    </StackPanel></ScrollViewer></Border>
+
+   </Grid>
+
+   <Grid x:Name="EditorPage" Grid.Row="1" Visibility="Collapsed"><Grid.ColumnDefinitions><ColumnDefinition Width="200"/><ColumnDefinition Width="*"/><ColumnDefinition Width="285"/></Grid.ColumnDefinitions>
+
+    <Border Background="#111316" CornerRadius="14" Padding="12" BorderBrush="#22262C" BorderThickness="1" Margin="0,0,12,0"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+     <TextBlock Text="1. CHOOSE DATA" FontSize="10" Foreground="#8B919B"/><ComboBox x:Name="AddSensor" DisplayMemberPath="label" SelectedValuePath="id" Margin="0,8,0,12"/>
+     <TextBlock Text="2. CHOOSE DISPLAY" FontSize="10" Foreground="#8B919B" Margin="0,0,0,8"/>
+     <Expander x:Name="PaletteSection" Header="HUD elements" IsExpanded="True"><WrapPanel x:Name="ElementPalette" Margin="0,10,0,0"/></Expander>
+     <TextBlock Text="Each sensor can use a number, bar, circular gauge or graph. Text and panels are separate elements." FontSize="11" Foreground="#8B919B" Margin="0,10"/>
+    </StackPanel></ScrollViewer></Border>
+    <Grid Grid.Column="1" Margin="0,0,12,0"><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/><RowDefinition Height="Auto"/></Grid.RowDefinitions>
+
+     <WrapPanel><Button x:Name="ImportImage" Content="Add image &amp; crop" Style="{StaticResource Primary}"/><Button x:Name="RecropImage" Content="Adjust crop"/><Button x:Name="ClearImage" Content="Clear image"/><Button x:Name="NewDesign" Content="New design"/></WrapPanel>
+
+     <Border Grid.Row="1" Background="#0A0B0D" CornerRadius="14" Padding="16"><Viewbox Stretch="Uniform"><Border Background="#080C14"><Canvas x:Name="DesignCanvas" Width="320" Height="240" Background="#080C14" ClipToBounds="True"/></Border></Viewbox></Border>
+
+     <StackPanel Grid.Row="2" Margin="0,12,0,0"><TextBlock Text="320 x 240 | drag elements to position | corner handle to resize" Foreground="#8B919B" FontSize="11"/><DockPanel Margin="0,10,0,0"><Button x:Name="SaveDesign" Content="Save theme" Style="{StaticResource Primary}" DockPanel.Dock="Right"/><TextBox x:Name="DesignName" Text="My custom face" ToolTip="Theme name"/><TextBox x:Name="DesignId" Text="my-custom-face" ToolTip="Theme ID" Width="145"/></DockPanel></StackPanel>
+
+    </Grid>
+
+    <Border Grid.Column="2" Background="#111316" CornerRadius="14" Padding="16" BorderBrush="#22262C" BorderThickness="1"><ScrollViewer VerticalScrollBarVisibility="Auto"><StackPanel>
+
+
+     <TextBlock Text="LAYERS" FontSize="10" Foreground="#8B919B" Margin="0,12,0,8"/><ListBox x:Name="Layers" Height="70" BorderBrush="#22262C"/>
+
+     <WrapPanel Margin="0,8,0,10"><Button x:Name="LayerUp" Content="Up"/><Button x:Name="LayerDown" Content="Down"/><Button x:Name="DeleteLayer" Content="Delete"/></WrapPanel>
+
+     <TextBlock Text="DISPLAY MODE" FontSize="10" Foreground="#8B919B"/><ComboBox x:Name="ModeSelect" DisplayMemberPath="label" SelectedValuePath="id"/>
+
+     <TextBlock Text="SENSOR" FontSize="10" Foreground="#8B919B"/><ComboBox x:Name="SensorSelect" DisplayMemberPath="label" SelectedValuePath="id"/>
+
+     <TabControl x:Name="HudInspector" Background="#111316" BorderBrush="#22262C" Margin="0,8,0,12">
+
+      <TabItem Header="Size"><StackPanel Margin="8">
+
+       <TextBlock Text="Drag the corner handle, or set exact canvas pixels." FontSize="11" Foreground="#8B919B" Margin="0,0,0,10"/>
+
+       <Grid><Grid.ColumnDefinitions><ColumnDefinition/><ColumnDefinition/></Grid.ColumnDefinitions><StackPanel><TextBlock Text="X"/><TextBox x:Name="PropX" Text="20"/><TextBlock Text="Width"/><TextBox x:Name="PropWidth" Text="110"/><TextBlock Text="Value / text size"/><TextBox x:Name="PropSize" Text="28"/><TextBlock Text="Label size"/><TextBox x:Name="PropLabelSize" Text="12"/></StackPanel><StackPanel Grid.Column="1"><TextBlock Text="Y"/><TextBox x:Name="PropY" Text="70"/><TextBlock Text="Height"/><TextBox x:Name="PropHeight" Text="110"/><TextBlock Text="Gauge maximum"/><TextBox x:Name="PropMax" Text="100"/><TextBlock Text="Line thickness"/><TextBox x:Name="PropStroke" Text="5"/></StackPanel></Grid>
+
+      </StackPanel></TabItem>
+
+      <TabItem Header="Text"><StackPanel Margin="8">
+
+       <TextBlock Text="Label (blank = automatic)"/><TextBox x:Name="PropLabel" MaxLength="64"/>
+
+       <CheckBox x:Name="ShowLabel" Content="Show label" IsChecked="True" Margin="0,0,0,10"/>
+
+       <CheckBox x:Name="ShowValue" Content="Show value" IsChecked="True" Margin="0,0,0,10"/>
+
+       <CheckBox x:Name="ShowUnit" Content="Show unit" IsChecked="True" Margin="0,0,0,10"/><TextBlock Text="Static text"/><TextBox x:Name="PropText" MaxLength="128"/>
+
+       <TextBlock Text="Unit (blank = &#176;C, %, W, etc. from sensor)"/><TextBox x:Name="PropUnit" MaxLength="16"/>
+
+       <TextBlock Text="Decimals (0-3)"/><TextBox x:Name="PropDecimals" Text="0"/>
+
+      </StackPanel></TabItem>
+
+      <TabItem Header="Style"><StackPanel Margin="8">
+
+       <TextBlock Text="Background opacity"/><Slider x:Name="PropOpacity" Minimum="0" Maximum="100" Value="65" TickFrequency="10" Margin="0,8,0,4"/><TextBlock x:Name="OpacityReadout" Text="65%" FontSize="11" Foreground="#8B919B"/>
+
+       <TextBlock Text="Colour target" Margin="0,10,0,0"/><ComboBox x:Name="ColourTarget" DisplayMemberPath="label" SelectedValuePath="id"/><TextBox x:Name="ColourHex" Text="#00C3FF" ToolTip="Hex colour, e.g. #00C3FF"/><Button x:Name="ApplyColour" Content="Apply hex colour"/><WrapPanel x:Name="ColourPalette" Margin="0,6,0,10"/>
+
+      </StackPanel></TabItem>
+
+     </TabControl>
+
+     <Button x:Name="ApplyProperties" Content="Apply HUD changes" Style="{StaticResource Primary}"/>
+
+     <TextBlock Text="Values are demo data while designing. Missing live sensors display a dash." FontSize="11" Foreground="#8B919B" Margin="0,6,0,0"/>
+
+    </StackPanel></ScrollViewer></Border>
+
+   </Grid>
+
+   <ScrollViewer x:Name="SettingsPage" Grid.Row="1" Visibility="Collapsed" VerticalScrollBarVisibility="Auto"><StackPanel MaxWidth="680" HorizontalAlignment="Left">
+
+    <Border Background="#111316" CornerRadius="14" Padding="22" Margin="0,0,0,16"><StackPanel><TextBlock Text="Playback" FontSize="20" FontWeight="SemiBold"/><TextBlock Text="Rotation interval in seconds (2-3600)" Margin="0,16,0,0"/><TextBox x:Name="SettingsDwell" Text="10" Width="150" HorizontalAlignment="Left"/><Button x:Name="SaveSettings" Content="Save timing" Style="{StaticResource Primary}" HorizontalAlignment="Left"/><TextBlock x:Name="PlaybackSummary" Foreground="#8B919B"/></StackPanel></Border>
+
+    <Border Background="#111316" CornerRadius="14" Padding="22" Margin="0,0,0,16"><StackPanel><TextBlock Text="Display &amp; startup" FontSize="20" FontWeight="SemiBold"/><WrapPanel Margin="0,16,0,0"><Button x:Name="StartDisplay" Content="Start display"/><Button x:Name="StopDisplay" Content="Stop display"/><Button x:Name="ReloadDisplay" Content="Reload themes"/></WrapPanel><TextBlock Text="Starts at Windows sign-in. The installed sensor task runs elevated without a new admin prompt." Foreground="#8B919B"/></StackPanel></Border>
+
+    <Border Background="#111316" CornerRadius="14" Padding="22" Margin="0,0,0,16"><StackPanel><TextBlock Text="Ambient screen lighting" FontSize="20" FontWeight="SemiBold"/><Button x:Name="ToggleAmbient" Content="Toggle screen sync · Ctrl+Alt+5" HorizontalAlignment="Left" Margin="0,12,0,8"/><TextBlock Text="Match supported PC RGB to the primary screen. Toggle off to hold the last colours. Enable Aura lighting first if it is disabled in BIOS." Foreground="#8B919B" TextWrapping="Wrap"/></StackPanel></Border>
+    <Border Background="#111316" CornerRadius="14" Padding="22"><StackPanel><TextBlock Text="Files &amp; diagnostics" FontSize="20" FontWeight="SemiBold"/><WrapPanel Margin="0,16,0,0"><Button x:Name="OpenThemesFolder" Content="Themes folder"/><Button x:Name="OpenLogs" Content="Display log"/></WrapPanel><TextBlock Text="Sensor refresh is every 2 seconds. Fan labels stay unassigned unless identified. Previews never pretend to be live readings." Foreground="#8B919B"/></StackPanel></Border>
+
+   </StackPanel></ScrollViewer>
+
+   <Border Grid.Row="2" Margin="0,12,0,0" Padding="10" CornerRadius="8" Background="#171A1E"><TextBlock x:Name="StatusMessage" Text="Ready" Foreground="#8B919B"/></Border>
+
+  </Grid>
+
+ </Grid>
+
+</Window>

@@ -1,0 +1,10 @@
+/target/
+/preview/
+*.log
+*.env
+.env*
+app-settings.json
+config.toml
+control-command.txt
+sensor*.json
+/themes/*/art.*
